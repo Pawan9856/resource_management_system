@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@auth/mongodb-adapter':
+        specifier: ^3.5.2
+        version: 3.5.2(mongodb@6.9.0)
       '@radix-ui/react-label':
         specifier: ^2.1.0
         version: 2.1.0(@types/react-dom@18.3.0)(@types/react@18.3.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -26,6 +29,9 @@ importers:
       lucide-react:
         specifier: ^0.445.0
         version: 0.445.0(react@18.3.1)
+      mongodb:
+        specifier: ^6.9.0
+        version: 6.9.0
       mongoose:
         specifier: ^8.6.3
         version: 8.6.3
@@ -101,6 +107,25 @@ packages:
         optional: true
       nodemailer:
         optional: true
+
+  '@auth/core@0.35.2':
+    resolution: {integrity: sha512-4PSrmSkZNMNQEHq86jARBYqls/9G2ECGMJmlazXxkRpZWgtKMUBXF1HUPz82cxy3qFXZ9/HPEiGIEGtIvu4YGQ==}
+    peerDependencies:
+      '@simplewebauthn/browser': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      '@simplewebauthn/browser':
+        optional: true
+      '@simplewebauthn/server':
+        optional: true
+      nodemailer:
+        optional: true
+
+  '@auth/mongodb-adapter@3.5.2':
+    resolution: {integrity: sha512-1ZzmOy5INaC0CEOuXJ1PwJ5iIgHiiERIfeb/VukcGukGGn6hLMSbbvVSeTTF52jgmMVicrZdDChCgiR1jmxE4Q==}
+    peerDependencies:
+      mongodb: ^6
 
   '@eslint-community/eslint-utils@4.4.0':
     resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
@@ -1214,6 +1239,33 @@ packages:
       socks:
         optional: true
 
+  mongodb@6.9.0:
+    resolution: {integrity: sha512-UMopBVx1LmEUbW/QE0Hw18u583PEDVQmUmVzzBRH0o/xtE9DBRA5ZYLOjpLIa03i8FXjzvQECJcqoMvCXftTUA==}
+    engines: {node: '>=16.20.1'}
+    peerDependencies:
+      '@aws-sdk/credential-providers': ^3.188.0
+      '@mongodb-js/zstd': ^1.1.0
+      gcp-metadata: ^5.2.0
+      kerberos: ^2.0.1
+      mongodb-client-encryption: '>=6.0.0 <7'
+      snappy: ^7.2.2
+      socks: ^2.7.1
+    peerDependenciesMeta:
+      '@aws-sdk/credential-providers':
+        optional: true
+      '@mongodb-js/zstd':
+        optional: true
+      gcp-metadata:
+        optional: true
+      kerberos:
+        optional: true
+      mongodb-client-encryption:
+        optional: true
+      snappy:
+        optional: true
+      socks:
+        optional: true
+
   mongoose@8.6.3:
     resolution: {integrity: sha512-++yRmm7hjMbqVA/8WeiygTnEfrFbiy+OBjQi49GFJIvCQuSYE56myyQWo4j5hbpcHjhHQU8NukMNGTwAWFWjIw==}
     engines: {node: '>=16.20.1'}
@@ -1806,6 +1858,25 @@ snapshots:
       oauth4webapi: 2.16.0
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
+
+  '@auth/core@0.35.2':
+    dependencies:
+      '@panva/hkdf': 1.2.1
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
+      jose: 5.9.2
+      oauth4webapi: 2.16.0
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3(preact@10.11.3)
+
+  '@auth/mongodb-adapter@3.5.2(mongodb@6.9.0)':
+    dependencies:
+      '@auth/core': 0.35.2
+      mongodb: 6.9.0
+    transitivePeerDependencies:
+      - '@simplewebauthn/browser'
+      - '@simplewebauthn/server'
+      - nodemailer
 
   '@eslint-community/eslint-utils@4.4.0(eslint@8.57.1)':
     dependencies:
@@ -3068,6 +3139,12 @@ snapshots:
       whatwg-url: 13.0.0
 
   mongodb@6.8.0:
+    dependencies:
+      '@mongodb-js/saslprep': 1.1.9
+      bson: 6.8.0
+      mongodb-connection-string-url: 3.0.1
+
+  mongodb@6.9.0:
     dependencies:
       '@mongodb-js/saslprep': 1.1.9
       bson: 6.8.0

@@ -15,7 +15,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials) => {
         const email = credentials.email as string | undefined;
         const password = credentials.password as string | undefined;
-        console.log(email, password);
         if (!email || !password)
           throw new CredentialsSignin({
             cause: "please provide both email and password",
@@ -37,10 +36,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: user._id,
           name: user.name,
           email: user.email,
+          role: user.role,
         };
       },
     }),
   ],
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.role = token.role as string; // Explicitly cast to string
+      session.user.id = token.id as string;
+      return session;
+    },
+  },
   pages: {
     signIn: "/login",
   },
