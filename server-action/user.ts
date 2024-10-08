@@ -4,7 +4,7 @@ import dbConnect from "@/lib/dbConnect";
 import { User } from "@/model/userModel";
 import { hash } from "bcryptjs";
 import { CredentialsSignin } from "next-auth";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 
 export const signUpUser = async (
@@ -43,4 +43,8 @@ export const loginUser = async (email: string, password: string) => {
     const err = error as CredentialsSignin;
     return err.cause;
   }
+};
+
+export const logoutUser = async () => {
+  await signOut();
 };
