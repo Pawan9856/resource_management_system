@@ -82,7 +82,7 @@ const PendingRequests = ({
             </div>
             <div className="flex gap-3">
               <span>Description: </span>
-              <span className="text-muted-foreground">
+              <span className="text-muted-foreground line-clamp-3">
                 {request.description}
               </span>
             </div>
