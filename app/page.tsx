@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await auth();
-  if (session?.user.role=== "user") redirect("/all-booking");
-  else if (session?.user.role=== "admin") redirect("/all-user-booking");
+  if (session?.user) redirect("/all-booking");
   else redirect("/login");
 }

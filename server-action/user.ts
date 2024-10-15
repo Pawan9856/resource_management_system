@@ -6,6 +6,7 @@ import { hash } from "bcryptjs";
 import { CredentialsSignin } from "next-auth";
 import { signIn, signOut } from "@/auth";
 import { redirect } from "next/navigation";
+import { UserModelType } from "@/types/model-type";
 
 export const signUpUser = async (
   name: string,
@@ -47,4 +48,20 @@ export const loginUser = async (email: string, password: string) => {
 
 export const logoutUser = async () => {
   await signOut();
+};
+
+export const getAllUser = async () => {
+  try {
+    await dbConnect();
+    const res = await User.find({});
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(res)),
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: String(error),
+    };
+  }
 };

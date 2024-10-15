@@ -9,9 +9,9 @@ const AdminNavbar = () => {
     <nav className="w-full flex justify-center p-1 text-sm">
       <ul className="bg-muted flex rounded-md w-2/3 justify-evenly gap-1 p-1">
         <Link
-          href="/all-user-booking"
+          href="/all-booking"
           className={`text-muted-foreground py-2 w-1/4 text-center ${
-            currentPath.startsWith("/all-user-booking") &&
+            currentPath.startsWith("/all-booking") &&
             "bg-white rounded-md text-primary shadow-sm"
           }`}
         >
