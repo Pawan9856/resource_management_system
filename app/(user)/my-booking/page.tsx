@@ -8,6 +8,7 @@ import ApproveRequests from "./_components/ApproveRequests";
 import { getRequestsByUser } from "@/server-action/request";
 import { useSession } from "next-auth/react";
 import { RequestModelType, UserModelType } from "@/types/model-type";
+import RejectedRequests from "./_components/RejectedRequests";
 
 const page = () => {
   const { data: session } = useSession();
@@ -18,6 +19,9 @@ const page = () => {
   const [approveRequests, setApproveRequests] = useState<RequestModelType[]>(
     []
   );
+  const [rejectedRequests, setRejectedRequests] = useState<RequestModelType[]>(
+    []
+  );
   const userId = session?.user.id;
   useEffect(() => {
     setPendingRequests(
@@ -25,6 +29,9 @@ const page = () => {
     );
     setApproveRequests(
       requests.filter((request) => request.status === "accepted")
+    );
+    setRejectedRequests(
+      requests.filter((request) => request.status === "rejected")
     );
   }, [requests]);
 
@@ -46,25 +53,34 @@ const page = () => {
   return (
     <div className="w-full h-full flex justify-center pb-5">
       <Card className="p-5 w-[90%]">
-        <Tabs defaultValue="pending" className="">
+        <Tabs defaultValue="approved" className="">
           <TabsList className="">
+            <TabsTrigger value="approved" className="px-5">
+              Approve Requests
+            </TabsTrigger>
             <TabsTrigger value="pending" className="px-5">
               Pending Requests
             </TabsTrigger>
-            <TabsTrigger value="approve" className="px-5">
-              Approve Requests
+            <TabsTrigger value="rejected" className="px-5">
+              Rejected Requests
             </TabsTrigger>
           </TabsList>
+          <TabsContent value="approved">
+            <ApproveRequests
+              approveRequests={approveRequests}
+              setApproveRequests={setApproveRequests}
+            />
+          </TabsContent>
           <TabsContent value="pending">
             <PendingRequests
               pendingRequests={pendingRequests}
               setPendingRequests={setPendingRequests}
             />
           </TabsContent>
-          <TabsContent value="approve">
-            <ApproveRequests
-              approveRequests={approveRequests}
-              setApproveRequests={setApproveRequests}
+          <TabsContent value="rejected">
+            <RejectedRequests
+              rejectedRequests={rejectedRequests}
+              setRejectedRequests={setRejectedRequests}
             />
           </TabsContent>
         </Tabs>

@@ -20,7 +20,7 @@ const layout = async ({
   console.log("session: ", session);
   return (
     <>
-      <div className="w-full h-screen flex flex-col ">
+      <div className="w-full h-screen flex flex-col">
         <UserNavbar />
         {children}
       </div>

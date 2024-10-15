@@ -66,3 +66,22 @@ export const deleteRequest = async (id: mongoose.Schema.Types.ObjectId) => {
     };
   }
 };
+
+export const updateStatusRequest = async (
+  id: mongoose.Schema.Types.ObjectId,
+  status: RequestModelType["status"]
+) => {
+  try {
+    await dbConnect();
+    await Request.updateOne({ _id: id }, { status });
+    return {
+      success: true,
+      message: "booking Request updated successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: String(error),
+    };
+  }
+};

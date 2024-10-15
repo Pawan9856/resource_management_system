@@ -7,7 +7,7 @@ import { MdEventAvailable } from "react-icons/md";
 const EventSection = ({ showlist }: { showlist: RequestType[] }) => {
   return (
     <>
-      <div className="flex flex-col gap-3 overflow-y-auto h-96">
+      <div className="flex flex-col gap-5 overflow-y-auto h-96">
         {showlist.map((item, index) => (
           <Card key={index} className="">
             <CardContent className="flex gap-3 p-3 text-sm">

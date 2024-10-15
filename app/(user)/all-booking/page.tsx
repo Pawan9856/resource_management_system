@@ -19,7 +19,10 @@ const page = () => {
   useEffect(() => {
     const getData = async () => {
       const res = (await getAllRequests()) as RequestType[];
-      setList(res);
+      const approvedRequests = res.filter(
+        (request) => request.status === "accepted"
+      );
+      setList(approvedRequests);
     };
     getData();
   }, []);
