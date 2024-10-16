@@ -4,7 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import AllUsers from "./_components/AllUsers";
 import PendingUsers from "./_components/PendingUsers";
-import { useSession } from "next-auth/react";
 import { getAllUser } from "@/server-action/user";
 import { toast } from "sonner";
 import { UserModelType } from "@/types/model-type";

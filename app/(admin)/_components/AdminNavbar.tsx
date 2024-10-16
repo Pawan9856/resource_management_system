@@ -7,7 +7,7 @@ const AdminNavbar = () => {
 
   return (
     <nav className="w-full flex justify-center p-1 text-sm">
-      <ul className="bg-muted flex rounded-md w-2/3 justify-evenly gap-1 p-1">
+      <ul className="bg-muted flex rounded-md w-full lg:w-2/3 justify-evenly gap-1 p-1">
         <Link
           href="/all-booking"
           className={`text-muted-foreground py-2 w-1/4 text-center ${

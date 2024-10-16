@@ -7,11 +7,6 @@ type ConnectionObject = {
 const connection: ConnectionObject = {};
 
 const dbConnect = async () => {
-  // Check if we're running in a server-side environment
-  if (typeof window !== 'undefined') {
-    console.log("Mongoose shouldn't be used in the client-side or Edge Runtime");
-    return;
-  }
 
   if (connection.isConnected) {
     console.log("Already connected to the database");

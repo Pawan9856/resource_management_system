@@ -22,7 +22,7 @@ const ResourcePicker = ({
     <div className="flex gap-2">
       <Select value={resource} onValueChange={setResource}>
         <SelectTrigger className="">
-          <SelectValue placeholder="Select LT" />
+          <SelectValue placeholder="Select Resource" />
         </SelectTrigger>
         <SelectContent>
           <ScrollArea className="max-h-[150px] overflow-auto">

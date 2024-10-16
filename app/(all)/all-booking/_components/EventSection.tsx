@@ -27,7 +27,7 @@ const EventSection = ({ showlist }: { showlist: RequestType[] }) => {
                 </div>
                 <div className="flex gap-3">
                   <span className=" font-semibold text-muted-foreground">Booked By :</span>
-                  <span>{item.createdBy.name}</span>
+                  <span>{item.createdBy?.name}</span>
                 </div>
               </div>
             </CardContent>

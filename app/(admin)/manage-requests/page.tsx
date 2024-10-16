@@ -5,6 +5,7 @@ import { RequestType } from "@/types/model-type";
 import { set } from "mongoose";
 import React, { useEffect, useState } from "react";
 import RequestCard from "./_components/RequestCard";
+import EmptyBox from "./_components/EmptyBox";
 
 const page = () => {
   const [allRequests, setAllRequests] = useState<RequestType[]>([]);
@@ -24,7 +25,14 @@ const page = () => {
   return (
     <div className="flex justify-center w-full h-full pb-5">
       <Card className=" md:w-[90%] p-5">
-        <RequestCard pendingRequests={pendingRequests} setPendingRequests={setPendingRequests}/>
+        {pendingRequests.length === 0 ? (
+          <EmptyBox />
+        ) : (
+          <RequestCard
+            pendingRequests={pendingRequests}
+            setPendingRequests={setPendingRequests}
+          />
+        )}
       </Card>
     </div>
   );

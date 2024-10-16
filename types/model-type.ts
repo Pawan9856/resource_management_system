@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import { ObjectId } from "mongodb";
 export type UserModelType = {
-  _id: mongoose.Schema.Types.ObjectId;
+  _id: ObjectId;
   name: string;
   email: string;
   password: string;
@@ -8,16 +8,15 @@ export type UserModelType = {
 };
 
 export type RequestModelType = {
-  _id: mongoose.Schema.Types.ObjectId;
+  _id: ObjectId;
   date: Date;
   startTime: string;
   endTime: string;
   description: string;
   resourceName: string;
-  createdBy: mongoose.Schema.Types.ObjectId;
+  createdBy: ObjectId;
   status: "pending" | "accepted" | "rejected";
 };
-
 
 export type RequestType = Omit<RequestModelType, "createdBy"> & {
   createdBy: UserModelType;

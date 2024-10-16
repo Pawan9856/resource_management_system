@@ -51,13 +51,13 @@ const RequestCard = ({
                   <div className="flex gap-3">
                     <span>CreatedBy: </span>
                     <span className="text-muted-foreground">
-                      {request.createdBy.name}
+                      {request.createdBy?.name}
                     </span>
                   </div>
                   <div className="flex gap-3">
                     <span>Email: </span>
                     <span className="text-muted-foreground">
-                      {request.createdBy.email}
+                      {request.createdBy?.email}
                     </span>
                   </div>
                 </div>

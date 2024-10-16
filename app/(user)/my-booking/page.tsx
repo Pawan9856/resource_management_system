@@ -9,6 +9,7 @@ import { getRequestsByUser } from "@/server-action/request";
 import { useSession } from "next-auth/react";
 import { RequestModelType, UserModelType } from "@/types/model-type";
 import RejectedRequests from "./_components/RejectedRequests";
+import EmptyBox from "./_components/EmptyBox";
 
 const page = () => {
   const { data: session } = useSession();
@@ -56,7 +57,7 @@ const page = () => {
         <Tabs defaultValue="approved" className="">
           <TabsList className="">
             <TabsTrigger value="approved" className="px-5">
-              Approve Requests
+              Approved Requests
             </TabsTrigger>
             <TabsTrigger value="pending" className="px-5">
               Pending Requests
@@ -66,22 +67,35 @@ const page = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="approved">
-            <ApproveRequests
-              approveRequests={approveRequests}
-              setApproveRequests={setApproveRequests}
-            />
+            {approveRequests.length === 0 ? (
+              <EmptyBox text="At the moment, there are no approve booking" />
+            ) : (
+              <ApproveRequests
+                approveRequests={approveRequests}
+                setApproveRequests={setApproveRequests}
+              />
+            )}
           </TabsContent>
           <TabsContent value="pending">
-            <PendingRequests
-              pendingRequests={pendingRequests}
-              setPendingRequests={setPendingRequests}
-            />
+            {pendingRequests.length === 0 ? (
+              <EmptyBox text="At the moment, there are no pending requests" />
+            ) : (
+              <PendingRequests
+                pendingRequests={pendingRequests}
+                setPendingRequests={setPendingRequests}
+              />
+            )}
           </TabsContent>
+
           <TabsContent value="rejected">
-            <RejectedRequests
-              rejectedRequests={rejectedRequests}
-              setRejectedRequests={setRejectedRequests}
-            />
+            {rejectedRequests.length === 0 ? (
+              <EmptyBox text="At the moment, there are no rejected requests" />
+            ) : (
+              <RejectedRequests
+                rejectedRequests={rejectedRequests}
+                setRejectedRequests={setRejectedRequests}
+              />
+            )}
           </TabsContent>
         </Tabs>
       </Card>

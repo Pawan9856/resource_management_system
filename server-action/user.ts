@@ -7,6 +7,8 @@ import { CredentialsSignin } from "next-auth";
 import { signIn, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import { UserModelType } from "@/types/model-type";
+import mongoose from "mongoose";
+import { Request } from "@/model/requestModel";
 
 export const signUpUser = async (
   name: string,
@@ -57,6 +59,22 @@ export const getAllUser = async () => {
     return {
       success: true,
       data: JSON.parse(JSON.stringify(res)),
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: String(error),
+    };
+  }
+};
+export const deleteUser = async (id: mongoose.Schema.Types.ObjectId) => {
+  try {
+    await dbConnect();
+    await User.findByIdAndDelete(id);
+    await Request.deleteMany({ createdBy: id });
+    return {
+      success: true,
+      message: "user deleted successfully",
     };
   } catch (error) {
     return {

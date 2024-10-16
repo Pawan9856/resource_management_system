@@ -8,9 +8,11 @@ import {
   RequestType,
   UserModelType,
 } from "@/types/model-type";
-import { format } from "date-fns";
+import { compareAsc, format, startOfDay } from "date-fns";
 import React, { useEffect, useState } from "react";
 import EventSection from "./_components/EventSection";
+import EmptyEvent from "./_components/EmptyEvent";
+import EmptyBox from "./_components/EmptyBox";
 
 const page = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -39,8 +41,8 @@ const page = () => {
   }, [date, list]);
 
   return (
-    <div className="w-full flex justify-center ">
-      <Card className="w-[90%] min-h-[80vh]">
+    <div className="w-full flex justify-center h-full pb-10 ">
+      <Card className="w-full md:w-[90%] h-full">
         <CardHeader></CardHeader>
         <CardContent className="grid grid-cols-1 lg:grid-cols-12 gap-5">
           <div className="flex justify-center items-start lg:col-span-6 col-span-12">
@@ -50,6 +52,9 @@ const page = () => {
               onSelect={setDate}
               className="rounded-md"
               showOutsideDays={false}
+              disabled={(date) =>
+                compareAsc(startOfDay(date), startOfDay(new Date())) < 0
+              }
               classNames={{
                 cell: "md:mx-3 md:my-2 m-2 h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
                 head_cell:
@@ -65,12 +70,24 @@ const page = () => {
           </div>
 
           <div className="col-span-12 w-full lg:col-span-5 flex flex-col gap-5 ">
-            {date && (
-              <h1 className="font-semibold text-lg">
-                Schedule for {format(date, "MMM dd, yyyy")}
-              </h1>
-            )}
-            <EventSection showlist={showlist} />
+            <div className="flex justify-center w-full">
+              {date && (
+                <span className="text-lg text-center font-semibold">
+                  Schedule for {format(date, "MMM dd, yyyy")}
+                </span>
+              )}
+            </div>
+            <div className="px-1">
+              {showlist.length === 0 ? (
+                date ? (
+                  <EmptyEvent />
+                ) : (
+                  <EmptyBox />
+                )
+              ) : (
+                <EventSection showlist={showlist} />
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
