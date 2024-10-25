@@ -13,6 +13,7 @@ export const createRequest = async ({
   resourceName,
   description,
   createdBy,
+  label
 }: {
   date: Date;
   startTime: string;
@@ -20,6 +21,7 @@ export const createRequest = async ({
   resourceName: string;
   description: string;
   createdBy: string;
+  label: string
 }) => {
   if (!ObjectId.isValid(createdBy)) throw new Error("Invalid user id");
   const userId = new ObjectId(createdBy);
@@ -30,6 +32,7 @@ export const createRequest = async ({
     description,
     resourceName,
     createdBy: userId,
+    label,
     status: "pending",
   };
   console.log("request: ", request);
@@ -51,7 +54,7 @@ export const getRequestsByUser = async (userId: string) => {
   return JSON.parse(JSON.stringify(requests));
 };
 
-export const deleteRequest = async (id: mongoose.Schema.Types.ObjectId) => {
+export const deleteRequest = async (id: ObjectId) => {
   try {
     await dbConnect();
     await Request.deleteOne({ _id: id });
@@ -68,7 +71,7 @@ export const deleteRequest = async (id: mongoose.Schema.Types.ObjectId) => {
 };
 
 export const updateStatusRequest = async (
-  id: mongoose.Schema.Types.ObjectId,
+  id: ObjectId,
   status: RequestModelType["status"]
 ) => {
   try {

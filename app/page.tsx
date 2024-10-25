@@ -1,9 +1,11 @@
-import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
+import { SessionProvider } from "next-auth/react";
+import Dashboard from "./_components/Dashboard";
 
-export default async function Home() {
-  const session = await auth();
-  if (session) redirect("/all-booking");
-  else redirect("/login");
+
+export default function Home() {
+  return (
+    <SessionProvider>
+      <Dashboard />
+    </SessionProvider>
+  )
 }

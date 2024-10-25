@@ -8,7 +8,7 @@ const EmptyEvent = () => {
       <span className="flex justify-center">
         <FaRegCalendarXmark className="w-16 h-16 " />
       </span>
-      <span>No Event Today</span>
+      <span>No Resource Booked</span>
     </div>
   )
 }

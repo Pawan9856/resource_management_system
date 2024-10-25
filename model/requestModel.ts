@@ -6,6 +6,7 @@ const requestSchema = new mongoose.Schema({
   endTime: { type: String, required: true },
   description: { type: String, required: true },
   resourceName: { type: String, required: true },
+  label: { type: String, required: true },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

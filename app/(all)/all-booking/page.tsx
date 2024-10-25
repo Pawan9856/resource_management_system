@@ -9,15 +9,18 @@ import {
   UserModelType,
 } from "@/types/model-type";
 import { compareAsc, format, startOfDay } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import EventSection from "./_components/EventSection";
 import EmptyEvent from "./_components/EmptyEvent";
 import EmptyBox from "./_components/EmptyBox";
+import Filter from "./_components/Filter";
 
 const page = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [list, setList] = useState<RequestType[]>([]);
   const [showlist, setShowList] = useState<RequestType[]>([]);
+  const [label, setLabel] = useState<string>("All Bookings");
+  const labelList = ["All Bookings", "LT", "Lab", "SAC", "Guest House"];
   useEffect(() => {
     const getData = async () => {
       const res = (await getAllRequests()) as RequestType[];
@@ -30,22 +33,29 @@ const page = () => {
   }, []);
   useEffect(() => {
     if (date == undefined) setShowList([]);
-    else {
+    else if (label == "All Bookings") {
       setShowList(
         list.filter(
           (item) =>
             format(item.date, "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
         )
       );
+    } else {
+      setShowList(
+        list.filter(
+          (item) =>
+            format(item.date, "yyyy-MM-dd") === format(date, "yyyy-MM-dd") &&
+            item.label === label
+        )
+      );
     }
-  }, [date, list]);
+  }, [date, list, label]);
 
   return (
     <div className="w-full flex justify-center h-full pb-10 ">
-      <Card className="w-full md:w-[90%] h-full">
-        <CardHeader></CardHeader>
+      <Card className="w-full md:w-[90%] h-full pt-10">
         <CardContent className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          <div className="flex justify-center items-start lg:col-span-6 col-span-12">
+          <div className="flex justify-center items-start lg:col-span-5 col-span-12 pt-10">
             <Calendar
               mode="single"
               selected={date}
@@ -70,13 +80,21 @@ const page = () => {
           </div>
 
           <div className="col-span-12 w-full lg:col-span-5 flex flex-col gap-5 ">
-            <div className="flex justify-center w-full">
-              {date && (
+            {date && (
+              <div className="flex flex-col items-center w-full gap-5">
                 <span className="text-lg text-center font-semibold">
                   Schedule for {format(date, "MMM dd, yyyy")}
                 </span>
-              )}
-            </div>
+                <div className=" w-full">
+                  <Filter
+                    label={label}
+                    setLabel={setLabel}
+                    labelList={labelList}
+                  />
+                </div>
+              </div>
+            )}
+
             <div className="px-1">
               {showlist.length === 0 ? (
                 date ? (

@@ -4,11 +4,14 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { updateStatusRequest } from "@/server-action/request";
 import { RequestType } from "@/types/model-type";
 import { format } from "date-fns";
-import mongoose from "mongoose";
 import React from "react";
 import { FaCheck } from "react-icons/fa6";
 import { FaXmark } from "react-icons/fa6";
 import { toast } from "sonner";
+import { ObjectId } from "mongodb";
+import { IoIosMail } from "react-icons/io";
+import { requestAcceptEmail, requestRejectEmail } from "@/server-action/emails";
+import { EmailDataType } from "@/types/email-type";
 
 const RequestCard = ({
   pendingRequests,
@@ -17,24 +20,42 @@ const RequestCard = ({
   pendingRequests: RequestType[];
   setPendingRequests: React.Dispatch<React.SetStateAction<RequestType[]>>;
 }) => {
-  const acceptRequest = async (id: mongoose.Schema.Types.ObjectId) => {
+  const acceptRequest = async (id: ObjectId, data: EmailDataType) => {
     const res = await updateStatusRequest(id, "accepted");
     if (res.success) {
       setPendingRequests(
         pendingRequests.filter((request) => request._id !== id)
       );
       toast.success("request for booking accepted successfully");
+      handleAcceptEmail(data);
     } else {
       toast.error(res.message);
     }
   };
-  const rejectRequest = async (id: mongoose.Schema.Types.ObjectId) => {
+  const rejectRequest = async (id: ObjectId, data: EmailDataType) => {
     const res = await updateStatusRequest(id, "rejected");
     if (res.success) {
       setPendingRequests(
         pendingRequests.filter((request) => request._id !== id)
       );
       toast.success("request for booking rejected");
+      handleRejectEmail(data);
+    } else {
+      toast.error(res.message);
+    }
+  };
+  const handleRejectEmail = async (data: EmailDataType) => {
+    const res = await requestRejectEmail(data);
+    if (res.success) {
+      toast.success("Email sent successfully");
+    } else {
+      toast.error(res.message);
+    }
+  };
+  const handleAcceptEmail = async (data: EmailDataType) => {
+    const res = await requestAcceptEmail(data);
+    if (res.success) {
+      toast.success("Email sent successfully");
     } else {
       toast.error(res.message);
     }
@@ -97,14 +118,34 @@ const RequestCard = ({
               <Button
                 variant="ghost"
                 className="w-8 h-8 p-1 text-green-500 hover:text-green-600"
-                onClick={() => acceptRequest(request._id)}
+                onClick={() =>
+                  acceptRequest(request._id, {
+                    email: request.createdBy?.email,
+                    name: request.createdBy?.name,
+                    date: format(request.date, "dd MMM yyyy"),
+                    startTime: request.startTime,
+                    endTime: request.endTime,
+                    resourceName: request.resourceName,
+                    description: request.description,
+                  })
+                }
               >
                 <FaCheck className="w-5 h-5 " />
               </Button>
               <Button
                 variant="ghost"
                 className="w-8 h-8 p-1 text-red-500 hover:text-red-600"
-                onClick={() => rejectRequest(request._id)}
+                onClick={() =>
+                  rejectRequest(request._id, {
+                    email: request.createdBy?.email,
+                    name: request.createdBy?.name,
+                    date: format(request.date, "dd MMM yyyy"),
+                    startTime: request.startTime,
+                    endTime: request.endTime,
+                    resourceName: request.resourceName,
+                    description: request.description,
+                  })
+                }
               >
                 <FaXmark className="w-5 h-5 " />
               </Button>

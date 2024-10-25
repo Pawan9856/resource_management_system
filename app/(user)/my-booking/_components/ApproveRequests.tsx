@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { MdDelete } from "react-icons/md";
 import { Button } from "@/components/ui/button";
-import mongoose from "mongoose";
+import { ObjectId } from "mongodb";
 import { deleteRequest } from "@/server-action/request";
 import { toast } from "sonner";
 
@@ -25,7 +25,7 @@ const ApproveRequests = ({
   approveRequests: RequestModelType[];
   setApproveRequests: React.Dispatch<React.SetStateAction<RequestModelType[]>>;
 }) => {
-  const handleSubmit = async (id: mongoose.Schema.Types.ObjectId) => {
+  const handleSubmit = async (id: ObjectId) => {
     console.log(id);
     const res = await deleteRequest(id);
     if (res.success) {
@@ -50,8 +50,8 @@ const ApproveRequests = ({
                   <DialogTitle>Are you absolutely sure?</DialogTitle>
                   <DialogDescription>
                     Are you sure you want to delete this booked request? Once
-                    deleted, this action cannot be undone and the booking
-                     will be permanently removed from the system.
+                    deleted, this action cannot be undone and the booking will
+                    be permanently removed from the system.
                   </DialogDescription>
                 </DialogHeader>
 

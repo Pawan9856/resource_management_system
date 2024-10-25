@@ -13,9 +13,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { logoutUser } from "@/server-action/user";
+import { redirect } from "next/navigation";
 
 const FormSchema = z.object({
   name: z.string().min(3, {
@@ -48,6 +49,9 @@ const ProfileForm = () => {
   function onSubmit(data: FormDataType) {
     console.log(data);
   }
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "/login" });
+  };
 
   return (
     <Form {...form}>
@@ -92,7 +96,7 @@ const ProfileForm = () => {
         </Button>
         <div className="flex justify-between">
           <Button type="submit">Submit</Button>
-          <Button onClick={() => logoutUser()}>LogOut</Button>
+          <Button onClick={() => handleLogout()}>LogOut</Button>
         </div>
       </form>
     </Form>

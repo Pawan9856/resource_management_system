@@ -14,6 +14,7 @@ export type RequestModelType = {
   endTime: string;
   description: string;
   resourceName: string;
+  label: string;
   createdBy: ObjectId;
   status: "pending" | "accepted" | "rejected";
 };

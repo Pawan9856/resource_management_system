@@ -42,6 +42,7 @@ export const loginUser = async (email: string, password: string) => {
       email,
       password,
     });
+    
   } catch (error) {
     const err = error as CredentialsSignin;
     return err.cause;

@@ -59,7 +59,13 @@ const parseTime = (timeString: string, date: Date): Date => {
   return parsedDate;
 };
 
-const BookingForm = ({resourceList}: {resourceList: string[]}) => {
+const BookingForm = ({
+  resourceList,
+  label,
+}: {
+  resourceList: string[];
+  label: string;
+}) => {
   const { data: session } = useSession();
   const userId = session?.user.id;
 
@@ -76,7 +82,7 @@ const BookingForm = ({resourceList}: {resourceList: string[]}) => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      await createRequest({ ...data, createdBy: userId || "" });
+      await createRequest({ ...data, createdBy: userId || "" , label});
       form.reset();
       toast.success("Request created successfully");
     } catch (error) {
@@ -143,7 +149,11 @@ const BookingForm = ({resourceList}: {resourceList: string[]}) => {
                   <FormItem className="col-span-6">
                     <FormLabel>Resource</FormLabel>
                     <FormControl>
-                      <ResourcePicker resource={field.value} setResource={field.onChange} resourceList={resourceList} />
+                      <ResourcePicker
+                        resource={field.value}
+                        setResource={field.onChange}
+                        resourceList={resourceList}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

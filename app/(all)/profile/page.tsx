@@ -1,9 +1,7 @@
-"use client";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { logoutUser } from "@/server-action/user";
 import React from "react";
 import ProfileForm from "./_components/ProfileForm";
+import { SessionProvider } from "next-auth/react";
 
 const page = () => {
   return (
@@ -11,8 +9,9 @@ const page = () => {
       <Card className="w-[90%]">
         <CardHeader>Profile</CardHeader>
         <CardContent>
-          <ProfileForm/>
-          
+          <SessionProvider>
+            <ProfileForm />
+          </SessionProvider>
         </CardContent>
       </Card>
     </div>
