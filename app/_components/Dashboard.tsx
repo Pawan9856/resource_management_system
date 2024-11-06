@@ -2,6 +2,8 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { FaSpinner } from "react-icons/fa6";
+import { ImSpinner9 } from "react-icons/im";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -15,10 +17,17 @@ export default function Dashboard() {
       router.push("/login");
     }
     // Redirect if user is logged in
-    if (session?.user) {
+    if (session?.user.role=="admin") {
       router.push("/all-booking");
+    }
+    else{
+      router.push("/book-resource");
     }
   }, [session, status, router]);
 
-  return <p>Loading...</p>;
+  return (
+    <div className="w-full h-screen flex justify-center items-center">
+      <FaSpinner className="animate-spin w-10 h-10 text-muted-foreground" />
+    </div>
+  );
 }
