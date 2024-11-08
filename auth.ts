@@ -41,15 +41,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/login",
   },
   trustHost: true,
-  secret: process.env.NEXTAUTH_SECRET, 
+  secret: process.env.NEXTAUTH_SECRET,
   cookies: {
     sessionToken: {
-      name: '__Secure-next-auth.session-token',  // Set a secure cookie name
+      name: "__Secure-next-auth.session-token",
       options: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',  // Ensure it's secure in production
-        sameSite: 'none',  // This allows cross-site cookies
-        path: '/',
+        secure: true, // Only secure in production
+        sameSite: "none", // Allows cross-site cookies
+        path: "/",
       },
     },
   },

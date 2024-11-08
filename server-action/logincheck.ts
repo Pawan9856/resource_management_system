@@ -38,13 +38,16 @@ export const demo = async (
   credentials: Partial<Record<"email" | "password", unknown>>
 ) => {
   try {
-    const response = await fetch("http://localhost:3000/api/auth-login-check", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    });
+    const response = await fetch(
+      `${process.env.NEXTAUTH_URL}/api/auth-login-check`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      }
+    );
     console.log(response);
 
     const data = await response.json();
