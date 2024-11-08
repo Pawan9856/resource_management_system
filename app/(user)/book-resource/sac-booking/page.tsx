@@ -1,13 +1,13 @@
 import React from "react";
-import BookingForm from "../_components/BookingForm";
 import { SessionProvider } from "next-auth/react";
+import BookingInfo from "../_components/BookingInfo";
 
 const page = () => {
   const resourceList = ["SAC", "OAT"];
   const label = "SAC";
   return (
     <SessionProvider>
-      <BookingForm resourceList={resourceList} label={label} />
+      <BookingInfo label={label} resourceList={resourceList} />
     </SessionProvider>
   );
 };

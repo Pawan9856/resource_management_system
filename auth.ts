@@ -1,6 +1,6 @@
 import NextAuth, { CredentialsSignin } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
-import { authLoginCheck } from "./server-action/logincheck";
+import { demo } from "./server-action/logincheck";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -11,8 +11,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const user = await authLoginCheck(credentials);
-        return user;
+        // const user = await authLoginCheck(credentials);
+        const res = await demo(credentials);
+        console.log("auth res: ", res);
+        if (!res.success) {
+          throw new CredentialsSignin({
+            cause: res.error,
+          });
+        }
+        return res.data;
       },
     }),
   ],

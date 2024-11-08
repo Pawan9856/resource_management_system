@@ -20,6 +20,7 @@ import { createRequest } from "@/server-action/request";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import ResourcePicker from "./ResourcePicker";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const formSchema = z
   .object({
@@ -62,9 +63,11 @@ const parseTime = (timeString: string, date: Date): Date => {
 const BookingForm = ({
   resourceList,
   label,
+  setShowForm,
 }: {
   resourceList: string[];
   label: string;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { data: session } = useSession();
   const userId = session?.user.id;
@@ -82,7 +85,7 @@ const BookingForm = ({
 
   const onSubmit = async (data: FormValues) => {
     try {
-      await createRequest({ ...data, createdBy: userId || "" , label});
+      await createRequest({ ...data, createdBy: userId || "", label });
       form.reset();
       toast.success("Request created successfully");
     } catch (error) {
@@ -94,7 +97,18 @@ const BookingForm = ({
   return (
     <div className="w-full flex justify-center">
       <Card className="w-4/5">
-        <CardHeader>LT Booking</CardHeader>
+        <CardHeader className="flex flex-row gap-2">
+          <Button
+            onClick={() => {
+              setShowForm(false);
+            }}
+            className="text-xl text-muted-foreground hover:text-primary"
+            variant="ghost"
+          >
+            <IoArrowBackOutline />
+          </Button>
+          <span>{label} Booking</span>
+        </CardHeader>
         <CardContent>
           <Form {...form}>
             <form
