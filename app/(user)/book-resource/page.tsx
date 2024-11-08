@@ -41,6 +41,7 @@ const page = () => {
           <Link
             href={resource.link}
             key={index}
+            prefetch={true}
             className="h-40 hover:scale-105 transition-all duration-300 ease-in-out rounded-lg"
           >
             <Card className="h-full w-full hover:bg-primary/90 transition-all duration-300 ease-in-out hover:text-secondary flex justify-center items-center p-5 flex-col ">
