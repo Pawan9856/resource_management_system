@@ -9,21 +9,12 @@ import {
   UserModelType,
 } from "@/types/model-type";
 import { compareAsc, format, startOfDay } from "date-fns";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import EventSection from "@/app/(all)/all-booking/_components/EventSection";
 import EmptyEvent from "@/app/(all)/all-booking/_components/EmptyEvent";
 import EmptyBox from "@/app/(all)/all-booking/_components/EmptyBox";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import BookingForm from "./BookingForm";
-import { set } from "mongoose";
 
 const BookingInfo = ({
   label,

@@ -28,12 +28,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.verified = user.verified;
       }
       return token;
     },
     session({ session, token }) {
       session.user.role = token.role as string; // Explicitly cast to string
       session.user.id = token.id as string;
+      session.user.verified = token.verified as boolean;
       return session;
     },
   },

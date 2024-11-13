@@ -1,4 +1,4 @@
-// "use server";
+"use server";
 
 // import dbConnect from "@/lib/dbConnect";
 // import { User } from "@/model/userModel";

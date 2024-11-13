@@ -63,7 +63,7 @@ export default function RequestAcceptedEmail({
               </Text>
               <Button
                 style={styles.button}
-                href="http://localhost:3000/my-booking"
+                href={`${process.env.NEXTAUTH_URL}/my-booking`}
               >
                 View your Request Status
               </Button>

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { MdDelete } from "react-icons/md";
 import { Button } from "@/components/ui/button";
-import mongoose from "mongoose";
+import { ObjectId } from "mongodb";
 import { deleteRequest } from "@/server-action/request";
 import { toast } from "sonner";
 const PendingRequests = ({
@@ -24,7 +24,7 @@ const PendingRequests = ({
   pendingRequests: RequestModelType[];
   setPendingRequests: React.Dispatch<React.SetStateAction<RequestModelType[]>>;
 }) => {
-  const handleSubmit = async (id: mongoose.Schema.Types.ObjectId) => {
+  const handleSubmit = async (id: ObjectId) => {
     console.log(id);
     const res = await deleteRequest(id);
     if (res.success) {

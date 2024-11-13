@@ -36,7 +36,7 @@ const page = () => {
   ];
   return (
     <div className="w-full h-full flex justify-center pb-5">
-      <Card className="w-[90%] p-5 grid grid-cols-4 gap-5">
+      <Card className="w-full lg:w-[90%] p-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {BookResource.map((resource, index) => (
           <Link
             href={resource.link}

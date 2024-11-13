@@ -4,6 +4,7 @@ export type UserModelType = {
   name: string;
   email: string;
   password: string;
+  verified: boolean;
   role: "user" | "admin";
 };
 

@@ -2,6 +2,7 @@
 
 import dbConnect from "@/lib/dbConnect";
 import { Request } from "@/model/requestModel";
+import { User } from "@/model/userModel";
 import { RequestModelType } from "@/types/model-type";
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
@@ -13,7 +14,7 @@ export const createRequest = async ({
   resourceName,
   description,
   createdBy,
-  label
+  label,
 }: {
   date: Date;
   startTime: string;
@@ -21,7 +22,7 @@ export const createRequest = async ({
   resourceName: string;
   description: string;
   createdBy: string;
-  label: string
+  label: string;
 }) => {
   if (!ObjectId.isValid(createdBy)) throw new Error("Invalid user id");
   const userId = new ObjectId(createdBy);

@@ -11,10 +11,13 @@ import { useSession } from "next-auth/react";
 import { RequestModelType, UserModelType } from "@/types/model-type";
 import RejectedRequests from "./RejectedRequests";
 import EmptyBox from "./EmptyBox";
+import { Spline } from "lucide-react";
+import LoadingCard from "./LoadingCard";
 
 const MyBooking = () => {
   const { data: session } = useSession();
   const [requests, setRequests] = useState<RequestModelType[]>([]);
+  const [loading, setLoading] = useState(true);
   const [pendingRequests, setPendingRequests] = useState<RequestModelType[]>(
     []
   );
@@ -44,6 +47,7 @@ const MyBooking = () => {
         const res = (await getRequestsByUser(userId)) as RequestModelType[];
         console.log(res);
         setRequests(res);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching requests:", error);
       }
@@ -68,34 +72,52 @@ const MyBooking = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="approved">
-            {approveRequests.length === 0 ? (
-              <EmptyBox text="At the moment, there are no approve booking" />
+            {loading ? (
+              <LoadingCard />
             ) : (
-              <ApproveRequests
-                approveRequests={approveRequests}
-                setApproveRequests={setApproveRequests}
-              />
+              <div>
+                {approveRequests.length === 0 ? (
+                  <EmptyBox text="At the moment, there are no approve booking" />
+                ) : (
+                  <ApproveRequests
+                    approveRequests={approveRequests}
+                    setApproveRequests={setApproveRequests}
+                  />
+                )}
+              </div>
             )}
           </TabsContent>
           <TabsContent value="pending">
-            {pendingRequests.length === 0 ? (
-              <EmptyBox text="At the moment, there are no pending requests" />
+            {loading ? (
+              <LoadingCard />
             ) : (
-              <PendingRequests
-                pendingRequests={pendingRequests}
-                setPendingRequests={setPendingRequests}
-              />
+              <div>
+                {pendingRequests.length === 0 ? (
+                  <EmptyBox text="At the moment, there are no pending requests" />
+                ) : (
+                  <PendingRequests
+                    pendingRequests={pendingRequests}
+                    setPendingRequests={setPendingRequests}
+                  />
+                )}
+              </div>
             )}
           </TabsContent>
 
           <TabsContent value="rejected">
-            {rejectedRequests.length === 0 ? (
-              <EmptyBox text="At the moment, there are no rejected requests" />
+            {loading ? (
+              <LoadingCard />
             ) : (
-              <RejectedRequests
-                rejectedRequests={rejectedRequests}
-                setRejectedRequests={setRejectedRequests}
-              />
+              <div>
+                {rejectedRequests.length === 0 ? (
+                  <EmptyBox text="At the moment, there are no rejected requests" />
+                ) : (
+                  <RejectedRequests
+                    rejectedRequests={rejectedRequests}
+                    setRejectedRequests={setRejectedRequests}
+                  />
+                )}
+              </div>
             )}
           </TabsContent>
         </Tabs>
