@@ -7,8 +7,10 @@ import PendingUsers from "./_components/PendingUsers";
 import { getAllUser } from "@/server-action/user";
 import { toast } from "sonner";
 import { UserModelType } from "@/types/model-type";
+import LoadingCard from "./_components/LoadingCard";
 
 const page = () => {
+  const [loading, setLoading] = useState(true);
   const [allUsers, setAllUsers] = useState<UserModelType[]>([]);
   const [verifiedUser, setVerifiedUser] = useState<UserModelType[]>([]);
   const [nonVerifiedUser, setNonVerifiedUser] = useState<UserModelType[]>([]);
@@ -17,7 +19,15 @@ const page = () => {
       const res = await getAllUser();
       if (res.success) {
         console.log(res.data);
-        setVerifiedUser(res.data);
+        const verifiedUsers = res.data.filter(
+          (user: UserModelType) => user.verified === true
+        );
+        const nonVerifiedUsers = res.data.filter(
+          (user: UserModelType) => user.verified === false
+        );
+        setVerifiedUser(verifiedUsers);
+        setNonVerifiedUser(nonVerifiedUsers);
+        setLoading(false);
       } else {
         toast.error(res.message);
       }
@@ -30,16 +40,29 @@ const page = () => {
         <Tabs defaultValue="allUsers" className="py-3 px-5">
           <TabsList className="">
             <TabsTrigger value="allUsers">All verified Users</TabsTrigger>
-            <TabsTrigger value="nonVerifiedUsers">Non verified Users</TabsTrigger>
+            <TabsTrigger value="nonVerifiedUsers">
+              Non verified Users
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="allUsers">
-            <AllUsers
-              verifiedUser={verifiedUser}
-              setVerifiedUser={setVerifiedUser}
-            />
+            {loading ? (
+              <LoadingCard />
+            ) : (
+              <AllUsers
+                verifiedUser={verifiedUser}
+                setVerifiedUser={setVerifiedUser}
+              />
+            )}
           </TabsContent>
           <TabsContent value="nonVerifiedUsers">
-            <PendingUsers />
+          {loading ? (
+              <LoadingCard />
+            ) : (
+              <PendingUsers
+                nonVerifiedUser={nonVerifiedUser}
+                setNonVerifiedUser={setNonVerifiedUser}
+              />
+            )}
           </TabsContent>
         </Tabs>
       </Card>

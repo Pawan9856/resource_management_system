@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import UserNavbar from "./_components/UserNavbar";
 import UnauthorizePage from "./_components/UnauthorizePage";
+import NonVerifiedUser from "../_components/NonVerifiedUser";
 
 const layout = async ({
   children,
@@ -11,10 +12,13 @@ const layout = async ({
 }>) => {
   const session = await auth();
   if (!session?.user) redirect("/login");
+  if (session?.user.verified !== true) {
+    return <NonVerifiedUser />;
+  }
   if (session?.user.role !== "user") {
     return <UnauthorizePage />;
   }
-  console.log("session: ", session);
+
   return (
     <>
       <div className="w-full h-screen flex flex-col">

@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import mongoose from "mongoose";
+import { ObjectId } from "mongodb";
 import { deleteUser } from "@/server-action/user";
 import { toast } from "sonner";
 
@@ -24,7 +24,7 @@ const AllUsers = ({
   verifiedUser: UserModelType[];
   setVerifiedUser: Dispatch<SetStateAction<UserModelType[]>>;
 }) => {
-  const deleteHandler = async (id: mongoose.Schema.Types.ObjectId) => {
+  const deleteHandler = async (id: ObjectId) => {
     const res = await deleteUser(id);
     if (res.success) {
       setVerifiedUser(verifiedUser.filter((user) => user._id !== id));
@@ -53,7 +53,9 @@ const AllUsers = ({
           <div className="flex flex-col items-end col-span-1">
             <Dialog>
               <DialogTrigger>
-                <MdDelete className="w-5 h-5 cursor-pointer text-muted-foreground hover:text-primary transition-all duration-300 ease-in-out" />
+                <Button variant="ghost" className="group">
+                  <MdDelete className="w-5 h-5 cursor-pointer text-muted-foreground group-hover:text-primary transition-all duration-300 ease-in-out" />
+                </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>

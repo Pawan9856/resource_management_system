@@ -5,9 +5,7 @@ import { User } from "@/model/userModel";
 import { hash } from "bcryptjs";
 import { CredentialsSignin } from "next-auth";
 import { signIn, signOut } from "@/auth";
-import { redirect } from "next/navigation";
-import { UserModelType } from "@/types/model-type";
-import mongoose from "mongoose";
+import { ObjectId } from "mongodb";
 import { Request } from "@/model/requestModel";
 
 export const signUpUser = async (
@@ -42,7 +40,6 @@ export const loginUser = async (email: string, password: string) => {
       email,
       password,
     });
-    
   } catch (error) {
     const err = error as CredentialsSignin;
     return err.cause;
@@ -68,7 +65,7 @@ export const getAllUser = async () => {
     };
   }
 };
-export const deleteUser = async (id: mongoose.Schema.Types.ObjectId) => {
+export const deleteUser = async (id: ObjectId) => {
   try {
     await dbConnect();
     await User.findByIdAndDelete(id);
@@ -76,6 +73,39 @@ export const deleteUser = async (id: mongoose.Schema.Types.ObjectId) => {
     return {
       success: true,
       message: "user deleted successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: String(error),
+    };
+  }
+};
+
+export const approveUser = async (id: ObjectId) => {
+  try {
+    await dbConnect();
+    await User.findByIdAndUpdate(id, { verified: true });
+    return {
+      success: true,
+      message: "user approved successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: String(error),
+    };
+  }
+};
+
+export const getUserData = async (id: string | undefined) => {
+  try {
+    await dbConnect();
+    if (id === undefined) throw new Error("user not found");
+    const user = await User.findById(id);
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(user)),
     };
   } catch (error) {
     return {

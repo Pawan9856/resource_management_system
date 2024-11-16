@@ -8,7 +8,7 @@ import { ImSpinner9 } from "react-icons/im";
 export default function Dashboard() {
   const router = useRouter();
   const { data: session, status } = useSession();
-
+  console.log("session: ", session?.user);
   useEffect(() => {
     // Check the session status
     if (status === "loading") {
@@ -17,10 +17,9 @@ export default function Dashboard() {
       router.push("/login");
     }
     // Redirect if user is logged in
-    if (session?.user.role=="admin") {
+    if (session?.user.role == "admin") {
       router.push("/all-booking");
-    }
-    else{
+    } else if (session?.user.role == "user") {
       router.push("/book-resource");
     }
   }, [session, status, router]);

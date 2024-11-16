@@ -44,6 +44,7 @@ export async function POST(request: Request) {
       name: user.name,
       email: user.email,
       role: user.role,
+      verified: user.verified,
     },
     { status: 200 }
   );
