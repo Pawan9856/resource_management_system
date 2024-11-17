@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { ObjectId } from "mongodb";
 import { deleteUser } from "@/server-action/user";
 import { toast } from "sonner";
+import EditButton from "./EditButton";
 
 const AllUsers = ({
   verifiedUser,
@@ -31,6 +32,7 @@ const AllUsers = ({
       toast.success(res.message);
     } else toast.error(res.message);
   };
+
 
   return (
     <div className="w-full flex flex-col gap-5 h-[600px] overflow-auto pr-5 py-3">
@@ -80,6 +82,7 @@ const AllUsers = ({
                 </DialogFooter>
               </DialogContent>
             </Dialog>
+            <EditButton user={user} setVerifiedUser={setVerifiedUser} />
           </div>
         </Card>
       ))}

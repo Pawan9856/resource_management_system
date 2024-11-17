@@ -114,3 +114,19 @@ export const getUserData = async (id: string | undefined) => {
     };
   }
 };
+
+export const changeRole = async (id: ObjectId, role: "user" | "admin") => {
+  try {
+    await dbConnect();
+    await User.findByIdAndUpdate(id, { role: role });
+    return {
+      success: true,
+      message: "Role updated successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: String(error),
+    };
+  }
+};
