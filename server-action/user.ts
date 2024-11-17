@@ -2,7 +2,7 @@
 
 import dbConnect from "@/lib/dbConnect";
 import { User } from "@/model/userModel";
-import { hash } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import { CredentialsSignin } from "next-auth";
 import { signIn, signOut } from "@/auth";
 import { ObjectId } from "mongodb";
@@ -122,6 +122,35 @@ export const changeRole = async (id: ObjectId, role: "user" | "admin") => {
     return {
       success: true,
       message: "Role updated successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: String(error),
+    };
+  }
+};
+
+export const changePassword = async (
+  id: string | undefined,
+  oldPassword: string,
+  newPassword: string
+) => {
+  try {
+    if (id === undefined) throw new Error("user not found");
+    await dbConnect();
+    const user = await User.findById(id);
+    const isMatch = await compare(oldPassword, user.password);
+    if (!isMatch)
+      return {
+        success: false,
+        message: "Old Password is incorrect",
+      };
+    const hashedPassword = await hash(newPassword, 10);
+    await User.findByIdAndUpdate(id, { password: hashedPassword });
+    return {
+      success: true,
+      message: "Password updated successfully",
     };
   } catch (error) {
     return {
