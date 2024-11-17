@@ -5,7 +5,7 @@ import { SessionProvider } from "next-auth/react";
 
 const page = () => {
   return (
-    <div className="w-full h-full flex justify-center">
+    <div className="w-full h-[90%] flex justify-center">
       <Card className="w-[90%]">
         <CardHeader>Profile</CardHeader>
         <CardContent>
