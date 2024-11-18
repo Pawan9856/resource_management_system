@@ -6,13 +6,19 @@ import { Label } from "@/components/ui/label";
 
 import { toast } from "sonner";
 import { loginUser } from "@/server-action/user";
+import { useState } from "react";
+import { FaSpinner } from "react-icons/fa";
 
 const LoginForm = () => {
   const router = useRouter();
-  const handleSubmit = async (FormData: FormData) => {
-    console.log(FormData);
-    const email = FormData.get("email") as string | undefined;
-    const password = FormData.get("password") as string | undefined;
+  const [loading, setLoading] = useState<boolean>(false);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevents the default form submission behavior
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    setLoading(true);
+    const email = formData.get("email") as string | undefined;
+    const password = formData.get("password") as string | undefined;
     if (!email || !password) {
       toast.error("please provide all fields");
       return;
@@ -25,10 +31,11 @@ const LoginForm = () => {
     } else {
       toast.error(String(error), { id: toastId });
     }
+    setLoading(false);
   };
 
   return (
-    <form action={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -49,8 +56,12 @@ const LoginForm = () => {
           required
         />
       </div>
-      <Button type="submit" className="w-full">
-        Login
+      <Button className="w-full" type="submit" disabled={loading}>
+        {loading ? (
+          <FaSpinner className="animate-spin w-5 h-5 text-muted-foreground" />
+        ) : (
+          "Login"
+        )}
       </Button>
     </form>
   );

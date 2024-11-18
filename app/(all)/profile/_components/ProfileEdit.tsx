@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { changePassword } from "@/server-action/user";
+import { set } from "mongoose";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
+import { FaSpinner } from "react-icons/fa";
 import { toast } from "sonner";
 
 const ProfileEdit = () => {
@@ -16,6 +18,7 @@ const ProfileEdit = () => {
   const user = session?.user;
   const handleChangePassword = async () => {
     console.log(oldPassword, newPassword, confirmPassword);
+    setLoading(true);
     if (oldPassword === "" || newPassword === "" || confirmPassword === "") {
       toast.error("Please fill all the fields");
     } else if (newPassword !== confirmPassword) {
@@ -28,6 +31,7 @@ const ProfileEdit = () => {
         toast.error(res.message);
       }
     }
+    setLoading(false);
     setOldPassword("");
     setNewPassword("");
     setConfirmPassword("");
@@ -97,8 +101,8 @@ const ProfileEdit = () => {
         />
       </div>
       <div className="w-full mt-2">
-        <Button className="w-full" onClick={handleChangePassword}>
-          Change Password
+        <Button className="w-full" onClick={handleChangePassword} disabled={loading}>
+          {loading ? <FaSpinner className="animate-spin w-5 h-5 text-muted-foreground" /> : "Change Password"}
         </Button>
       </div>
     </div>

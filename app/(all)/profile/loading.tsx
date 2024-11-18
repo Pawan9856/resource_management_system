@@ -1,6 +1,5 @@
 import React from "react";
 import { FaSpinner } from "react-icons/fa6";
-import { ImSpinner6, ImSpinner9 } from "react-icons/im";
 
 const loading = () => {
   return (
