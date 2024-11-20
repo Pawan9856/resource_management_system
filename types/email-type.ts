@@ -7,3 +7,13 @@ export type EmailDataType = {
   resourceName: string;
   description: string;
 };
+
+export type ReminderEmailDataType = {
+  userEmail: string;
+  name: string;
+  reminderDate: string;
+  startTime: string;
+  endTime: string;
+  resourceName: string;
+  description: string;
+};

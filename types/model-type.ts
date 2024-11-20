@@ -19,7 +19,16 @@ export type RequestModelType = {
   createdBy: ObjectId;
   status: "pending" | "accepted" | "rejected";
 };
-
+export type ReminderModelType = {
+  _id: ObjectId;
+  name: string;
+  userEmail: string;
+  reminderDate: string;
+  startTime: string;
+  endTime: string;
+  description: string;
+  resourceName: string;
+};
 export type RequestType = Omit<RequestModelType, "createdBy"> & {
   createdBy: UserModelType;
 };

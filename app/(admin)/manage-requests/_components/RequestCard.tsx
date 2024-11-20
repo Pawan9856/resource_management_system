@@ -12,6 +12,7 @@ import { ObjectId } from "mongodb";
 import { IoIosMail } from "react-icons/io";
 import { requestAcceptEmail, requestRejectEmail } from "@/server-action/emails";
 import { EmailDataType } from "@/types/email-type";
+import { createReminder } from "@/server-action/reminder";
 
 const RequestCard = ({
   pendingRequests,
@@ -22,6 +23,16 @@ const RequestCard = ({
 }) => {
   const acceptRequest = async (id: ObjectId, data: EmailDataType) => {
     const res = await updateStatusRequest(id, "accepted");
+    await createReminder({
+      userEmail: data.email,
+      name: data.name,
+      reminderDate: data.date,
+      startTime: data.startTime,
+      endTime: data.endTime,
+      description: data.description,
+      resourceName: data.resourceName,
+    });
+    
     if (res.success) {
       setPendingRequests(
         pendingRequests.filter((request) => request._id !== id)
