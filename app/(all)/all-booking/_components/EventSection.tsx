@@ -7,6 +7,7 @@ import { ImLab } from "react-icons/im";
 import { HiMiniBuildingLibrary } from "react-icons/hi2";
 import { GiBlockHouse } from "react-icons/gi";
 import { FaHouseChimneyUser } from "react-icons/fa6";
+import { FaAmbulance } from "react-icons/fa";
 
 const EventSection = ({ showlist }: { showlist: RequestType[] }) => {
   return (
@@ -26,6 +27,9 @@ const EventSection = ({ showlist }: { showlist: RequestType[] }) => {
                   )}
                   {item.label === "Guest house" && (
                     <FaHouseChimneyUser className="w-14 h-14" />
+                  )}
+                  {item.label === "Vehicle" && (
+                    <FaAmbulance className="w-14 h-14" />
                   )}
                 </div>
                 <div className="flex flex-col justify-center items-start gap-2 col-span-9">

@@ -10,6 +10,7 @@ import { FaHouseChimneyUser } from "react-icons/fa6";
 import { HiMiniBuildingLibrary } from "react-icons/hi2";
 import { ImLab } from "react-icons/im";
 import { GiBlockHouse, GiVikingLonghouse } from "react-icons/gi";
+import { FaAmbulance } from "react-icons/fa";
 
 const page = () => {
   const BookResource = [
@@ -33,10 +34,15 @@ const page = () => {
       name: "Guest House",
       logo: <FaHouseChimneyUser className="w-20 h-20" />,
     },
+    {
+      link: "/book-resource/vehicle-booking",
+      name: "Vehicle",
+      logo: <FaAmbulance className="w-20 h-20" />,
+    },
   ];
   return (
     <div className="w-full h-full flex justify-center pb-5">
-      <Card className="w-full lg:w-[90%] p-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <Card className="w-full lg:w-[90%] p-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 content-start  shadow-lg ">
         {BookResource.map((resource, index) => (
           <Link
             href={resource.link}

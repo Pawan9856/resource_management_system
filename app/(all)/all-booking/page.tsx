@@ -20,7 +20,7 @@ const page = () => {
   const [list, setList] = useState<RequestType[]>([]);
   const [showlist, setShowList] = useState<RequestType[]>([]);
   const [label, setLabel] = useState<string>("All Bookings");
-  const labelList = ["All Bookings", "LT", "Lab", "SAC", "Guest House"];
+  const labelList = ["All Bookings", "LT", "Lab", "SAC", "Guest House", "Vehicle"];
   useEffect(() => {
     const getData = async () => {
       const res = (await getAllRequests()) as RequestType[];
